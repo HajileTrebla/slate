@@ -1,0 +1,1 @@
+# SLATE - Finance and Budget Tracking App
