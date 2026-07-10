@@ -4,8 +4,9 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
-from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse
+
+from app.services.user_service import create_user, get_user, get_users
 
 router = APIRouter(
     prefix="/users",
@@ -18,42 +19,38 @@ router = APIRouter(
     response_model=UserResponse,
     status_code=201,
 )
-async def create_user(
+async def create_user_route(
     payload: UserCreate,
     db: Session = Depends(get_db),
 ):
-    user = User(
-        username=payload.username,
-        email=payload.email,
-        first_name=payload.first_name,
-        last_name=payload.last_name,
+    return create_user(
+        db=db,
+        payload=payload,
     )
-
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-
-    return user
 
 
 @router.get(
         "/",
         response_model=list[UserResponse],
     )
-async def get_users(
+async def get_users_route(
     db: Session = Depends(get_db)
 ):
-    return db.query(User).all()
+    return get_users(
+        db=db,
+    )
 
 
 @router.get("/{user_id}")
-async def get_user(
+async def get_user_route(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    user = db.query(User).filter(
-        User.id == user_id
-    ).first()
+    user = get_user(
+        db=db,
+        user_id=user_id,
+    )
+
     if not user:
         raise HTTPException(
             status_code=404,
