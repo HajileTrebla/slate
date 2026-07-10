@@ -2,12 +2,18 @@
 backend/venv/
 __pycache__/
 
-# Environemtn
+# Testing
+backend/test.db
+
+# Environment
 .env
 
 # React
 frontend/node_modules/
 frontend/dist/
+
+# Database
+backend/ledger.db
 
 # IDE
 .vscode/
