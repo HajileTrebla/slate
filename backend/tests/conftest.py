@@ -33,12 +33,20 @@ def test_db():
 
 @pytest.fixture
 def db_session(test_db):
-    db = TestingSessionLocal()
+    connection = engine.connect()
+
+    transaction = connection.begin()
+
+    db = TestingSessionLocal(
+        bind=connection
+    )
 
     try:
         yield db
     finally:
         db.close()
+        transaction.rollback()
+        connection.close()
 
 
 @pytest.fixture
