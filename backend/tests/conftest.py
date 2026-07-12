@@ -8,11 +8,12 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.core.db import Base, get_db
 
-TEST_DATABASE_URL = "sqlite:///./test.db"
+from app.core.config import settings
+
+TEST_DATABASE_URL = settings.TEST_DATABASE_URL
 
 engine = create_engine(
     TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False}
 )
 
 TestingSessionLocal = sessionmaker(
