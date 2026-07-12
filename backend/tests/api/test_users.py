@@ -8,19 +8,16 @@ def test_create_user(client):
         json={
             "username": "j.do",
             "email": "johndoe@gmail.com",
-            "first_name": "john",
-            "last_name": "doe",
+            "password": "password123",
         }
     )
 
-    assert response.status_code == 201
+    assert response.status_code == 201, response.json()
 
     data = response.json()
 
     assert data["username"] == "j.do"
     assert data["email"] == "johndoe@gmail.com"
-    assert data["first_name"] == "john"
-    assert data["last_name"] == "doe"
     assert "id" in data
 
 
@@ -31,8 +28,7 @@ def test_get_user(client):
         json={
             "username": "sam88",
             "email": "samson.g01@gmail.com",
-            "first_name": "samson",
-            "last_name": "gonzales",
+            "password": "password123",
         }
     )
 
@@ -42,7 +38,7 @@ def test_get_user(client):
         f"/users/{user_id}"
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
 
 @pytest.mark.api
@@ -61,8 +57,7 @@ def test_invalid_email(client):
         json={
             "username": "jann13",
             "email": "invalid-email",
-            "first_name": "Janielle",
-            "last_name": "Santos",
+            "password": "password123",
         }
     )
 
