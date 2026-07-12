@@ -18,3 +18,8 @@ class UserResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+
+class UserLogin(BaseModel):
+    identifier: str | EmailStr
+    password: str = Field(..., min_length=8, max_length=255)
