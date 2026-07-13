@@ -10,8 +10,7 @@ def test_create_user(db_session):
     payload = UserCreate(
             username="j.do",
             email="johndoe@gmail.com",
-            first_name="john",
-            last_name="doe",
+            password="password123",
     )
 
     user = create_user(
@@ -28,8 +27,7 @@ def test_get_user(db_session):
     payload = UserCreate(
             username="j.do",
             email="johndoe@gmail.com",
-            first_name="john",
-            last_name="doe",
+            password="password123",
     )
 
     created_user = create_user(
@@ -53,14 +51,12 @@ def test_get_users(db_session):
         UserCreate(
                 username="j.do",
                 email="johndoe@gmail.com",
-                first_name="john",
-                last_name="doe",
+                password="password123",
             ),
         UserCreate(
                 username="sam88",
                 email="samson.g01@gmail.com",
-                first_name="samson",
-                last_name="gonzales",
+                password="password123",
             ),
     ]
 
