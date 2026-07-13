@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from pydantic import EmailStr
 
 from app.models.user import User
-from app.core.security import verify_password
+from app.core.security import verify_password, create_access_token
 
 
 def authenticate_user(
@@ -26,4 +26,6 @@ def authenticate_user(
     ):
         return None
 
-    return user
+    return create_access_token(
+        subject=str(user.id)
+    )

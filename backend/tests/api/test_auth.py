@@ -26,9 +26,9 @@ def test_username_login(client):
 
     data = response.json()
 
-#   assert "access_token" in data
-#   assert data["token_type"] == "bearer"
     assert data["message"] == "Login successful"
+    assert "access_token" in data
+    assert data["token_type"] == "bearer"
 
 
 @pytest.mark.api
@@ -56,9 +56,9 @@ def test_email_login(client):
 
     data = response.json()
 
-#   assert "access_token" in data
-#   assert data["token_type"] == "bearer"
     assert data["message"] == "Login successful"
+    assert "access_token" in data
+    assert data["token_type"] == "bearer"
 
 
 @pytest.mark.api
