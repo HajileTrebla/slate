@@ -4,12 +4,13 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException
 
 from app.core.db import get_db
+from app.core.security import decode_access_token
 from app.models.user import User
 
 import jwt
 
 oauth2_scheme = OAuth2PasswordBearer(
-        tokenUrl="auth/login"
+        tokenUrl="/auth/login"
     )
 
 
@@ -18,7 +19,7 @@ def get_current_user(
     token: str = Depends(oauth2_scheme)
 ):
     try:
-        payload = jwt.decode(token, "your_secret_key", algorithms=["HS256"])
+        payload = decode_access_token(token)
 
         user_id: str = payload.get("sub")
 
