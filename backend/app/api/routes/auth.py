@@ -36,7 +36,7 @@ async def register(
     return {
         "message": "User registered successfully",
         "user": {
-            "id": user.id,
+            "uuid": user.uuid,
             "username": user.username,
             "email": user.email
         }

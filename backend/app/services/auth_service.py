@@ -59,5 +59,5 @@ def authenticate_user(
         return None
 
     return create_access_token(
-        subject=str(user.id)
+        subject=str(user.uuid)
     )

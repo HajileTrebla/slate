@@ -25,12 +25,12 @@ def create_user(
 
 def get_user(
     db: Session,
-    user_id: int,
+    user_id: str,
 ) -> User | None:
 
     return (
         db.query(User)
-        .filter(User.id == user_id)
+        .filter(User.uuid == user_id)
         .first()
     )
 

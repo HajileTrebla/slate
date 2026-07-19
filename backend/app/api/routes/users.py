@@ -43,7 +43,7 @@ async def get_users_route(
 
 @router.get("/{user_id}")
 async def get_user_route(
-    user_id: int,
+    user_id: str,
     db: Session = Depends(get_db)
 ):
     user = get_user(

@@ -1,5 +1,7 @@
 import pytest
 
+from uuid import uuid4
+
 from app.schemas.user import UserCreate
 from app.services.user_service import create_user, get_user, get_users
 
@@ -18,7 +20,7 @@ def test_create_user(db_session):
         payload=payload,
     )
 
-    assert user.id is not None
+    assert user.uuid is not None
 
 
 @pytest.mark.unit
@@ -37,11 +39,11 @@ def test_get_user(db_session):
 
     found_user = get_user(
         db=db_session,
-        user_id=created_user.id,
+        user_id=created_user.uuid,
     )
 
     assert found_user is not None
-    assert found_user.id == created_user.id
+    assert found_user.uuid == created_user.uuid
 
 
 @pytest.mark.unit
@@ -76,7 +78,7 @@ def test_get_missing_user(db_session):
 
     user = get_user(
         db=db_session,
-        user_id=99999,
+        user_id=uuid4(),
     )
 
     assert user is None

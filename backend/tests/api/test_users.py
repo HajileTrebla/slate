@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import pytest
 
 
@@ -18,7 +20,7 @@ def test_create_user(client):
 
     assert data["username"] == "j.do"
     assert data["email"] == "johndoe@gmail.com"
-    assert "id" in data
+    assert "uuid" in data
 
 
 @pytest.mark.api
@@ -32,7 +34,7 @@ def test_get_user(client):
         }
     )
 
-    user_id = create.json()["id"]
+    user_id = create.json()["uuid"]
 
     response = client.get(
         f"/users/{user_id}"
@@ -44,7 +46,7 @@ def test_get_user(client):
 @pytest.mark.api
 def test_get_missing_user(client):
     response = client.get(
-        "/users/999999"
+        f"/users/{uuid4()}"
     )
 
     assert response.status_code == 404

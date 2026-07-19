@@ -16,7 +16,7 @@ def test_register_user(client):
 
     assert response .status_code == 200, response.json()
 
-    assert "id" in data["user"]
+    assert "uuid" in data["user"]
     assert data["message"] == "User registered successfully"
     assert data["user"]["username"] == "j.do"
     assert data["user"]["email"] == "johndoe@gmail.com"

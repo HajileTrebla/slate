@@ -31,7 +31,7 @@ def get_current_user(
 
     user = db.get(
         User,
-        int(user_id)
+        user_id
     )
 
     if not user:

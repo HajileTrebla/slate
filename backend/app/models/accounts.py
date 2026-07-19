@@ -2,17 +2,17 @@ from typing import TYPE_CHECKING
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import UUID, DateTime, String, func
+from sqlalchemy import UUID, DateTime, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
 
 if TYPE_CHECKING:
-    from app.models.accounts import Account
+    from app.models.user import User
 
 
-class User(Base):
-    __tablename__ = "users"
+class Account(Base):
+    __tablename__ = "accounts"
 
     uuid: Mapped[UUID] = mapped_column(
             UUID(as_uuid=True),
@@ -20,22 +20,15 @@ class User(Base):
             default=uuid4
         )
 
-    username: Mapped[str] = mapped_column(
-            String(50),
+    user_id: Mapped[UUID] = mapped_column(
+            ForeignKey("users.uuid")
+        )
+
+    name: Mapped[str] = mapped_column(
+            String(100),
             unique=True,
             nullable=False,
             index=True,
-        )
-
-    email: Mapped[str | None] = mapped_column(
-            String(255),
-            unique=True,
-            nullable=True,
-        )
-
-    password: Mapped[str] = mapped_column(
-            String(255),
-            nullable=False,
         )
 
     created_at: Mapped[datetime] = mapped_column(
@@ -51,7 +44,7 @@ class User(Base):
             nullable=False,
         )
 
-    accounts: Mapped[list["Account"]] = relationship(
-            "Account",
-            back_populates="user"
+    user: Mapped["User"] = relationship(
+            "User",
+            back_populates="accounts"
         )
