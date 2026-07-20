@@ -3,17 +3,16 @@ from uuid import UUID
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 
-
-class UserCreate(BaseModel):
+class UserBase(BaseModel):
     username: str
     email: EmailStr | None
+
+class UserCreate(UserBase):
     password: str = Field(..., min_length=8, max_length=255)
 
 
-class UserResponse(BaseModel):
+class UserResponse(UserBase):
     uuid: UUID
-    username: str
-    email: EmailStr | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
