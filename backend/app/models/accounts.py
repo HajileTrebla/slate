@@ -5,7 +5,10 @@ from uuid import uuid4
 from sqlalchemy import UUID, DateTime, ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from app.enums.account import AccountType
+
 from app.core.db import Base
+
 
 if TYPE_CHECKING:
     from app.models.user import User
@@ -29,6 +32,16 @@ class Account(Base):
             unique=True,
             nullable=False,
             index=True,
+        )
+
+    account_type: Mapped[AccountType] = mapped_column(
+            String(50),
+            nullable=False,
+        )
+    
+    is_archived: Mapped[bool] = mapped_column(
+            nullable=False,
+            default=False
         )
 
     created_at: Mapped[datetime] = mapped_column(

@@ -13,6 +13,7 @@ class UserCreate(UserBase):
 
 class UserResponse(UserBase):
     uuid: UUID
+
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
