@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.models.account import Account
+from app.models.user import User
+
 from app.schemas.account import AccountCreate, AccountUpdate
 
 
@@ -86,7 +88,8 @@ def get_accounts_by_user(
 ) -> list[Account]:
 
     return (
-        db.query(Account)
-        .filter(Account.user_id == user_id)
-        .all()
+        db.query(User)
+        .filter(User.uuid == user_id)
+        .first()
+        .accounts
     )
