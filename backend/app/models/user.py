@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.db import Base
 
 if TYPE_CHECKING:
-    from app.models.accounts import Account
+    from backend.app.models.account import Account
 
 
 class User(Base):

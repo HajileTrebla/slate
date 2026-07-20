@@ -39,6 +39,12 @@ class Account(Base):
             nullable=False,
         )
     
+    currency: Mapped[str] = mapped_column(
+            String(3),
+            nullable=False,
+            default="PHP"
+        )
+    
     is_archived: Mapped[bool] = mapped_column(
             nullable=False,
             default=False

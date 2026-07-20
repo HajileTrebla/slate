@@ -10,10 +10,18 @@ class AccountBase(BaseModel):
     user_id: UUID
     name: str
     account_type: AccountType
+    currency: str
 
 
 class AccountCreate(AccountBase):
     pass
+
+
+class AccountUpdate(BaseModel):
+    name: str | None
+    account_type: AccountType | None
+    currency: str | None
+    is_archived: bool | None
 
 
 class AccountResponse(AccountBase):
