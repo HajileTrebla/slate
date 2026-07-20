@@ -7,7 +7,6 @@ from app.enums.account import AccountType
 
 
 class AccountBase(BaseModel):
-    user_id: UUID
     name: str
     account_type: AccountType
     currency: str
@@ -18,10 +17,11 @@ class AccountCreate(AccountBase):
 
 
 class AccountUpdate(BaseModel):
-    name: str | None
-    account_type: AccountType | None
-    currency: str | None
-    is_archived: bool | None
+    uuid: UUID
+    name: str | None = None
+    account_type: AccountType | None = None
+    currency: str | None = None
+    is_archived: bool | None = None
 
 
 class AccountResponse(AccountBase):
