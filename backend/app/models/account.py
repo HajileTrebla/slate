@@ -71,5 +71,5 @@ class Account(Base):
     
     entries: Mapped[list["TransactionEntry"]] = relationship(
             "TransactionEntry",
-            back_populates="accounts"
+            back_populates="account"
         )

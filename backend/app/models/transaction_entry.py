@@ -57,10 +57,10 @@ class TransactionEntry(Base):
 
     transaction: Mapped["Transaction"] = relationship(
             "Transaction",
-            back_populates="transaction_entry"
+            back_populates="entries"
         )
 
-    accounts: Mapped["Account"] = relationship(
+    account: Mapped["Account"] = relationship(
             "Account",
-            back_populates="transaction_entry"
+            back_populates="entries"
         )
