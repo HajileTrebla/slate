@@ -33,6 +33,26 @@ async def create_account_route(
     )
 
 
+@router.patch(
+        
+        "/{account_id}",
+        response_model=AccountResponse,
+)
+async def update_account_route(
+    payload: AccountUpdate,
+    account_id: str,
+    db: Session=Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+
+    return update_account(
+        db=db,
+        account_id=account_id,
+        user_id=current_user.uuid,
+        payload=payload
+    )
+
+
 @router.get(
     "/",
     response_model=list[AccountResponse],

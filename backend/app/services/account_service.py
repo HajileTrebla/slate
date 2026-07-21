@@ -29,13 +29,14 @@ def create_account(
 def update_account(
     db: Session,
     user_id: str,
+    account_id: str,
     payload: AccountUpdate,
 ) -> Account:
 
     account = (
         db.query(Account)
         .filter(
-            Account.uuid == payload.uuid,
+            Account.uuid == account_id,
             Account.user_id == user_id
         )
         .first()

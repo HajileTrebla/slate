@@ -17,7 +17,6 @@ class AccountCreate(AccountBase):
 
 
 class AccountUpdate(BaseModel):
-    uuid: UUID
     name: str | None = None
     account_type: AccountType | None = None
     currency: str | None = None
