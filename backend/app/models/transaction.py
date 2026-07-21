@@ -2,17 +2,17 @@ from typing import TYPE_CHECKING
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import UUID, DateTime, String, func
+from sqlalchemy import UUID, DateTime, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
 
 if TYPE_CHECKING:
-    from app.models.account import Account
+    from app.models.transaction_entry import TransactionEntry
 
 
-class User(Base):
-    __tablename__ = "users"
+class Transaction(Base):
+    __tablename__="transactions"
 
     uuid: Mapped[UUID] = mapped_column(
             UUID(as_uuid=True),
@@ -20,22 +20,20 @@ class User(Base):
             default=uuid4
         )
 
-    username: Mapped[str] = mapped_column(
-            String(50),
-            unique=True,
+    date: Mapped[datetime] = mapped_column(
+            DateTime(timezone=True),
+            server_default=func.now(),
             nullable=False,
-            index=True,
         )
 
-    email: Mapped[str | None] = mapped_column(
-            String(255),
-            unique=True,
-            nullable=True,
+    description: Mapped[str | None] = mapped_column(
+            Text,
+            nullable=True
         )
 
-    password: Mapped[str] = mapped_column(
+    reference: Mapped[str | None] = mapped_column(
             String(255),
-            nullable=False,
+            nullable=True
         )
 
     created_at: Mapped[datetime] = mapped_column(
@@ -51,7 +49,7 @@ class User(Base):
             nullable=False,
         )
 
-    accounts: Mapped[list["Account"]] = relationship(
-            "Account",
-            back_populates="user"
-        )
+    entries: Mapped[list[TransactionEntry]] = relationship(
+        "TransactionEntry",
+        back_populates="transaction"
+    )

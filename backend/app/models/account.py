@@ -12,6 +12,7 @@ from app.core.db import Base
 
 if TYPE_CHECKING:
     from app.models.user import User
+    from app.models.transaction_entry import TransactionEntry
 
 
 class Account(Base):
@@ -65,5 +66,10 @@ class Account(Base):
 
     user: Mapped["User"] = relationship(
             "User",
+            back_populates="accounts"
+        )
+    
+    entries: Mapped[list["TransactionEntry"]] = relationship(
+            "TransactionEntry",
             back_populates="accounts"
         )
