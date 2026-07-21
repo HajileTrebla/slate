@@ -1,6 +1,3 @@
-from email import header
-from urllib import response
-
 import pytest
 
 
@@ -18,6 +15,39 @@ def test_create_account(client, auth_headers):
     )
 
     assert response.status_code == 201, response.json()
+
+
+@pytest.mark.api
+def test_update_account(client, auth_headers):
+
+    create_payload = {
+            "name": "Test Savings",
+            "account_type": "asset",
+            "currency": "PHP",
+        }
+
+    account = client.post(
+        "/accounts",
+        json=create_payload,
+        headers=auth_headers,
+    )
+
+    update_payload = {
+        "name" : "Test Loan",
+        "account_type": "liability",
+    }
+
+    response = client.patch(
+        f"/accounts/{account.json()['uuid']}",
+        json=update_payload,
+        headers=auth_headers,
+    )
+
+    data = response.json()
+
+    assert response.status_code == 200, response.json()
+    assert data['name'] == 'Test Loan'
+    assert data['account_type'] == 'liability'
 
 
 @pytest.mark.api
@@ -51,6 +81,7 @@ def test_get_accounts(client, auth_headers):
     assert len(response.json()) == 2
     assert response.status_code == 200, response.json()
 
+
 @pytest.mark.api
 def test_get_account(client, auth_headers):
 
@@ -81,6 +112,7 @@ def test_get_account(client, auth_headers):
     )
 
     assert response.status_code == 200, response.json()
+
 
 @pytest.mark.api
 def test_get_my(client, auth_headers):

@@ -74,9 +74,9 @@ def test_update_account(db_session):
     # Test updating the account
     updated_account = update_account(
         db=db_session,
+        account_id=account.uuid,
         user_id=user.uuid,
         payload=AccountUpdate(
-            uuid=account.uuid,
             name="John Doe Auto Loan",
             account_type="liability",
             currency="EUR"
