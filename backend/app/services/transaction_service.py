@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from datetime import datetime
 
 from app.models.transaction import Transaction
 from app.schemas.transaction import TransactionCreate, TransactionUpdate

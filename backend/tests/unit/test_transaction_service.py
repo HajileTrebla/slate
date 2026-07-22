@@ -1,4 +1,3 @@
-from pydantic import NonNegativeFloat
 import pytest
 
 from datetime import datetime, UTC

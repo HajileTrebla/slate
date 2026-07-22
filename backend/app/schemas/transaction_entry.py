@@ -7,8 +7,8 @@ from datetime import datetime
 
 class TransactionEntryBase(BaseModel):
     account_id: UUID
-    debit: Decimal | None = Field(default=None, g=0)
-    credit: Decimal | None = Field(default=None, g=0)
+    debit: Decimal | None = Field(default=None, ge=Decimal("0"))
+    credit: Decimal | None = Field(default=None, ge=Decimal("0"))
 
 class TransactionEntryCreate(TransactionEntryBase):
     pass
