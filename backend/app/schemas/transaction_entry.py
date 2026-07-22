@@ -1,24 +1,23 @@
+from decimal import Decimal
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 
 class TransactionEntryBase(BaseModel):
-    transaction_id: UUID
     account_id: UUID
-    debit: float | None = None
-    credit: float | None = None
+    debit: Decimal | None = Field(default=None, g=0)
+    credit: Decimal | None = Field(default=None, g=0)
 
 class TransactionEntryCreate(TransactionEntryBase):
     pass
 
 
 class TransactionEntryUpdate(BaseModel):
-    transaction_id: UUID | None = None
     account_id: UUID | None = None
-    debit: float | None = None
-    credit: float | None = None
+    debit: Decimal | None = None
+    credit: Decimal | None = None
 
 
 class TransactionEntryResponse(TransactionEntryBase):

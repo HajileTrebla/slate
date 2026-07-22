@@ -1,8 +1,9 @@
 from typing import TYPE_CHECKING
+from decimal import Decimal
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import UUID, DateTime, ForeignKey, Float, func
+from sqlalchemy import UUID, DateTime, ForeignKey, Numeric, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
@@ -30,15 +31,15 @@ class TransactionEntry(Base):
             ForeignKey("accounts.uuid")
         )
     
-    debit: Mapped[float] = mapped_column(
-            Float(),
-            default=0.00,
+    debit: Mapped[Decimal] = mapped_column(
+            Numeric(18, 2),
+            default=Decimal("0.00"),
             nullable=False,
         )
 
-    credit: Mapped[float] = mapped_column(
-            Float(),
-            default=0.00,
+    credit: Mapped[Decimal] = mapped_column(
+            Numeric(18, 2),
+            default=Decimal("0.00"),
             nullable=False,
         )
 
