@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from sqlalchemy.orm import Session
 
@@ -33,13 +33,13 @@ async def create_transaction_route(
 
 @router.get(
     "/",
-    response_model=TransactionResponse,
+    response_model=list[TransactionResponse],
 )
 async def get_transactions_route(
     db: Session=Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    return get_transaction(
+    return get_transactions(
         db=db,
     )
 
@@ -70,7 +70,15 @@ async def get_transaction_route(
     db: Session=Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    return get_transaction(
+    transaction = get_transaction(
         db=db,
         transaction_id=transaction_id,
     )
+
+    if transaction is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Transaction not found"
+        )
+
+    return transaction

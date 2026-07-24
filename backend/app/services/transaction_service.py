@@ -11,6 +11,10 @@ from app.schemas.transaction_entry import (
     TransactionEntryCreate,
 )
 
+from app.models.transaction_entry import (
+    TransactionEntry
+)
+
 
 def _create_entries(
     transaction: Transaction,
@@ -22,9 +26,11 @@ def _create_entries(
 
     for entry in entries:
         transaction.entries.append(
-            account_id= entry.account_id,
-            debit= entry.debit,
-            credit= entry.credit,
+            TransactionEntry(
+                account_id= entry.account_id,
+                debit= entry.debit,
+                credit= entry.credit,
+            )
         )
 
 
@@ -116,7 +122,7 @@ def get_transaction(
 
 def get_transactions(
         db: Session,
-) -> Transaction | None:
+) -> list[Transaction] | None:
     
     return (
         db.query(Transaction)
